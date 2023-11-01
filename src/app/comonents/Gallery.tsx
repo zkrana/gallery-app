@@ -173,16 +173,16 @@
               )}
             </div>
 
-{images.map((image, index) => (
-  (image !== featuredImage) && ( // Add this conditional check
-    <div
-      key={image}
-      className="w-full 2xl:w-[290.4px] h-full 2xl:h-300.4px transition-opacity hover:opacity-80"
-    >
-      <Image image={image} index={index} />
-    </div>
-  )
-))}
+          {images.map((image, index) => (
+            (image !== featuredImage) && ( // Add this conditional check
+              <div
+                key={image}
+                className="w-full 2xl:w-[290.4px] h-full 2xl:h-300.4px transition-opacity hover:opacity-80"
+              >
+                <Image image={image} index={index} />
+              </div>
+            )
+          ))}
 
             <div className="w-full h-full flex items-center justify-center bg-white m-1">
               <label htmlFor="imageUpload" className="w-[152px] sm:w-[290.4px] h-[160px] sm:h-[300.4px] flex flex-col justify-center items-center">
