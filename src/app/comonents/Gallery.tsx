@@ -1,5 +1,4 @@
 "use client";
-"use client";
 import React, { useState, useEffect } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -49,6 +48,12 @@ const Gallery = () => {
     setSelectedImageIndices([]);
   };
 
+  const handleImageFeature = (image) => {
+    if (image !== featuredImage) {
+      setFeaturedImage(image);
+    }
+  };
+
   const Image = ({ image, index }) => {
     const [, ref] = useDrop({
       accept: "IMAGE",
@@ -56,11 +61,6 @@ const Gallery = () => {
         if (draggedItem.index !== index) {
           moveImage(draggedItem.index, index);
           draggedItem.index = index;
-          if (index === images.length - 1 && !draggedItem.isFeaturedImage) {
-            if (featuredImage !== image) {
-              setFeaturedImage(image);
-            }
-          }
         }
       },
     });
@@ -76,14 +76,8 @@ const Gallery = () => {
       handleDragStart(image);
     };
 
-    const handleImageFeature = () => {
-      if (
-        index === images.length - 1 &&
-        !selectedImageIndices.length &&
-        featuredImage !== image
-      ) {
-        setFeaturedImage(image);
-      }
+    const handleImageFeatureClick = () => {
+      handleImageFeature(image);
     };
 
     return (
@@ -101,7 +95,7 @@ const Gallery = () => {
           position: "relative",
         }}
         onClick={handleClick}
-        onDoubleClick={handleImageFeature}
+        onDoubleClick={handleImageFeatureClick}
       >
         {selectedImageIndices.includes(index) && (
           <input
@@ -150,8 +144,7 @@ const Gallery = () => {
 
     setTimeout(() => {
       setShowDeleteMessage(false);
-      // Hide checkboxes when the message disappears
-      setShowCheckboxes(false);
+      setSelectedImageIndices([]);
     }, 4000);
   };
 
@@ -178,7 +171,10 @@ const Gallery = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-semibold mb-4">Image Gallery</h2>
+          <div className="flex flex-col gap-1 mb-4">
+            <h2 className="text-2xl font-semibold">Image Gallery</h2>
+            <p> For setting featured image, please press double click.</p>
+          </div>
           <div>
             {selectedImages.length > 0 && (
               <button onClick={handleDeleteClick}>Delete</button>
