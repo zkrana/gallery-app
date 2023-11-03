@@ -23,13 +23,13 @@ const Gallery = () => {
   const [selectedImageIndices, setSelectedImageIndices] = useState([]);
   const [showDeleteMessage, setShowDeleteMessage] = useState(false);
 
-  const moveImage = (dragIndex, hoverIndex) => {
+  const moveImage = (dragIndex: number, hoverIndex: number) => {
     const updatedImages = [...images];
     const [draggedImage] = updatedImages.splice(dragIndex, 1);
     updatedImages.splice(hoverIndex, 0, draggedImage);
 
     if (dragIndex !== images.length - 1 && hoverIndex === images.length - 1) {
-      if (featuredImage !== draggedImage) {
+      if (draggedImage !== featuredImage) {
         setFeaturedImage(draggedImage);
       }
     }
